@@ -9,7 +9,7 @@ Requirements: Java 21+ and Maven 3.9+.
 ```bash
 mvn -q dependency:go-offline
 mvn -q package -DskipTests
-java -jar mcp-tokenizer/target/mcp-tokenizer-*.jar download
+java -jar mcp-tokenizer/target/mcp-tokenizer-*-all.jar download
 mvn verify
 ```
 

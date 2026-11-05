@@ -34,7 +34,7 @@ public final class TkTokenizerServer {
         TkServerLauncher.mtkStartStdio("mcp-tokenizer", "0.1.0", mtkTools(tkStore::mtkTokenizer));
     }
 
-    static List<TkTool> mtkTools(Function<String, TkBpeTokenizer> tkTokenizers) {
+    public static List<TkTool> mtkTools(Function<String, TkBpeTokenizer> tkTokenizers) {
         Map<String, Object> tkEncoding = mtkEnum("Tokenizer encoding, default " + _TKDEFAULT_ENCODING,
                 TkEncoding._TKALL.stream().map(TkEncoding::tkName).toArray(String[]::new));
         Map<String, Object> tkText = mtkField("string", "Input text");

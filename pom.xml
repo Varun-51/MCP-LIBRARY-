@@ -46,6 +46,11 @@
                 <artifactId>mcp-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.github.varun-51</groupId>
+                <artifactId>mcp-model-inspector</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -87,6 +92,8 @@
                             </goals>
                             <configuration>
                                 <createDependencyReducedPom>false</createDependencyReducedPom>
+                                <shadedArtifactAttached>true</shadedArtifactAttached>
+                                <shadedClassifierName>all</shadedClassifierName>
                                 <transformers>
                                     <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                         <mainClass>${exec.mainClass}</mainClass>

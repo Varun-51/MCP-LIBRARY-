@@ -37,7 +37,7 @@ public final class TkGuardrailsServer {
         TkServerLauncher.mtkStartStdio("mcp-guardrails", "0.1.0", mtkTools());
     }
 
-    static List<TkTool> mtkTools() {
+    public static List<TkTool> mtkTools() {
         Map<String, Object> tkText = mtkField("string", "Text to inspect");
         Map<String, Object> tkTypes = mtkArray("string", "Detector types to apply, default all of the category");
         return List.of(

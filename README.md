@@ -24,7 +24,7 @@ Requirements: Java 21+ and Maven 3.9+.
 
 ```bash
 mvn -q package -DskipTests
-java -jar mcp-tokenizer/target/mcp-tokenizer-*.jar download
+java -jar mcp-tokenizer/target/mcp-tokenizer-*-all.jar download
 ```
 
 `download` stores the vocabularies in `~/.mcp-library/tokenizers`. Set `TK_TOKENIZER_DIR` to use a different directory.
@@ -36,7 +36,7 @@ java -jar mcp-tokenizer/target/mcp-tokenizer-*.jar download
   "mcpServers": {
     "tokenizer": {
       "command": "java",
-      "args": ["-jar", "/path/to/MCP-LIBRARY-/mcp-tokenizer/target/mcp-tokenizer-0.1.0-SNAPSHOT.jar"]
+      "args": ["-jar", "/path/to/MCP-LIBRARY-/mcp-tokenizer/target/mcp-tokenizer-0.1.0-SNAPSHOT-all.jar"]
     }
   }
 }
@@ -48,7 +48,7 @@ java -jar mcp-tokenizer/target/mcp-tokenizer-*.jar download
 |---|---|
 | setup | `mvn -q dependency:go-offline` |
 | build | `mvn -q package -DskipTests` |
-| download | `java -jar mcp-tokenizer/target/mcp-tokenizer-*.jar download` |
+| download | `java -jar mcp-tokenizer/target/mcp-tokenizer-*-all.jar download` |
 | test | `mvn test` |
 | check | `mvn verify` |
 

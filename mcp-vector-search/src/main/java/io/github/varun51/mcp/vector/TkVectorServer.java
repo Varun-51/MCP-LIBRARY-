@@ -31,7 +31,7 @@ public final class TkVectorServer {
     private final Map<String, TkCollection> tkCollections = new ConcurrentHashMap<>();
     private final Path tkSnapshotDirectory;
 
-    TkVectorServer(Path tkSnapshotDirectory) {
+    public TkVectorServer(Path tkSnapshotDirectory) {
         this.tkSnapshotDirectory = tkSnapshotDirectory;
     }
 
@@ -41,7 +41,7 @@ public final class TkVectorServer {
         TkServerLauncher.mtkStartStdio("mcp-vector-search", "0.1.0", new TkVectorServer(tkDirectory).mtkTools());
     }
 
-    List<TkTool> mtkTools() {
+    public List<TkTool> mtkTools() {
         Map<String, Object> tkName = mtkField("string", "Collection name: letters, digits, '_' or '-', at most 64 characters");
         Map<String, Object> tkItems = Map.of("type", "array", "description", "Items to insert or replace",
                 "items", mtkObject(Map.of("id", mtkField("string", "Unique id"), "vector", mtkArray("number", "Embedding"),

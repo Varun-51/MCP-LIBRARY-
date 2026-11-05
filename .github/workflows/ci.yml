@@ -43,15 +43,14 @@ jobs:
 
       - name: Download and verify tokenizer vocabularies
         if: steps.vocab.outputs.cache-hit != 'true'
-        run: java -jar mcp-tokenizer/target/mcp-tokenizer-*.jar download
+        run: java -jar mcp-tokenizer/target/mcp-tokenizer-*-all.jar download
 
       - name: Test
         run: mvn -B -ntp verify
 
       - name: Smoke test stdio servers
         run: |
-          for tkOriginal in */target/original-mcp-*.jar; do
-            tkJar="${tkOriginal/original-/}"
+          for tkJar in */target/mcp-*-all.jar; do
             tkResponse=$( (printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"ci","version":"1"}}}'; sleep 3) | timeout 30 java -jar "$tkJar" 2>/dev/null | head -n 1)
             echo "$tkJar -> $tkResponse"
             echo "$tkResponse" | grep -q '"serverInfo"'

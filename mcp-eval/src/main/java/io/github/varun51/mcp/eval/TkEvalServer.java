@@ -28,7 +28,7 @@ public final class TkEvalServer {
         TkServerLauncher.mtkStartStdio("mcp-eval", "0.1.0", mtkTools());
     }
 
-    static List<TkTool> mtkTools() {
+    public static List<TkTool> mtkTools() {
         Map<String, Object> tkReferences = Map.of("type", "array", "description", "One reference per prediction; a list of acceptable references scores the best match",
                 "items", Map.of("anyOf", List.of(Map.of("type", "string"), Map.of("type", "array", "items", Map.of("type", "string")))));
         Map<String, Object> tkResults = Map.of("type", "array", "description", "Per problem: n samples generated, c of them correct",

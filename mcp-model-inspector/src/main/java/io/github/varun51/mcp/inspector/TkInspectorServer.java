@@ -35,7 +35,7 @@ public final class TkInspectorServer {
         TkServerLauncher.mtkStartStdio("mcp-model-inspector", "0.1.0", mtkTools(tkRoots));
     }
 
-    static List<TkTool> mtkTools(List<Path> tkRoots) {
+    public static List<TkTool> mtkTools(List<Path> tkRoots) {
         Map<String, Object> tkDtype = mtkEnum("Numeric format", _TKDTYPE_BYTES.keySet().stream().sorted().toArray(String[]::new));
         return List.of(
                 new TkTool("inspect_model_file", "Read a safetensors or GGUF header without loading weights: tensors, dtypes, parameter count, metadata",
