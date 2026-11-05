@@ -16,6 +16,7 @@
         <module>mcp-vector-search</module>
         <module>mcp-guardrails</module>
         <module>mcp-model-inspector</module>
+        <module>mcp-will-it-fit</module>
     </modules>
 
     <properties>
