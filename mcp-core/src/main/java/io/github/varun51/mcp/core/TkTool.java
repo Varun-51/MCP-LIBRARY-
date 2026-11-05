@@ -6,10 +6,19 @@ import io.modelcontextprotocol.spec.McpSchema.CallToolResult;
 import io.modelcontextprotocol.spec.McpSchema.Tool;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 public record TkTool(String tkName, String tkDescription, Map<String, Object> tkInputSchema, Function<TkArgs, Object> tkHandler) {
+
+    public static Map<String, Object> mtkResult(Object... tkPairs) {
+        Map<String, Object> tkResult = new LinkedHashMap<>();
+        for (int tkIndex = 0; tkIndex < tkPairs.length; tkIndex += 2) {
+            tkResult.put((String) tkPairs[tkIndex], tkPairs[tkIndex + 1]);
+        }
+        return tkResult;
+    }
 
     public CallToolResult mtkCall(Map<String, Object> tkArguments) {
         try {

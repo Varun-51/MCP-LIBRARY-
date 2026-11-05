@@ -33,6 +33,11 @@ class TkToolTest {
     }
 
     @Test
+    void mtkBuildsResultsInInsertionOrder() {
+        assertEquals(List.of("z", "a", "m"), List.copyOf(TkTool.mtkResult("z", 1, "a", 2, "m", 3).keySet()));
+    }
+
+    @Test
     void mtkMapsToolExceptionsToErrorResults() {
         CallToolResult tkResult = _TKECHO.mtkCall(Map.of());
         assertTrue(tkResult.isError());
