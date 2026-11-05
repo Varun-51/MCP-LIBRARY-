@@ -21,7 +21,7 @@ public final class TkFitPlanner {
     static final int _TKMAX_SHARDS = 200;
     static final Map<String, Double> _TKKV_BYTES = Map.of("fp16", 2.0, "q8_0", 34.0 / 32, "q4_0", 18.0 / 32);
     private static final Pattern _TKSHARD = Pattern.compile("-\\d{5}-of-\\d{5}(?=\\.(gguf|safetensors)$)");
-    private static final Pattern _TKQUANT = Pattern.compile("(?i)(IQ\\d_[A-Z]+|Q\\d_K_[SML]|Q\\d_K|Q\\d_[01]|BF16|F16|F32)");
+    private static final Pattern _TKQUANT = Pattern.compile("(?i)(IQ\\d_[A-Z]+|Q\\d_K_[SML]|Q\\d_K|Q\\d_[01]|BF16|FP16|F16|FP32|F32)");
 
     private final TkHubClient tkHub;
 
@@ -112,10 +112,12 @@ public final class TkFitPlanner {
             return new TkArchitecture(mtkLong(tkText, "num_hidden_layers", "n_layer"), tkKvHeads, tkHeadDim, tkMax, "config.json");
         }
         TkHubFile tkGguf = tkFiles.stream().filter(tkFile -> tkFile.tkPath().endsWith(".gguf") && !tkFile.tkPath().toLowerCase(Locale.ROOT).contains("mmproj"))
+                .filter(tkFile -> !_TKSHARD.matcher(tkFile.tkPath()).find() || tkFile.tkPath().contains("-00001-of-"))
                 .min(Comparator.comparingLong(TkHubFile::tkSize))
                 .orElseThrow(() -> new TkToolException("no config.json or GGUF metadata to read the architecture from"));
         Map<?, ?> tkMetadata = (Map<?, ?>) tkHub.mtkHeader(tkRepo, tkRevision, tkGguf).get("metadata");
-        String tkArch = String.valueOf(tkMetadata.get("general.architecture"));
+        TkToolException.mtkCheck(tkMetadata.get("general.architecture") instanceof String, "GGUF metadata in " + tkGguf.tkPath() + " has no general.architecture");
+        String tkArch = (String) tkMetadata.get("general.architecture");
         long tkHeads = mtkLong(tkMetadata, tkArch + ".attention.head_count");
         long tkHeadDim = tkMetadata.get(tkArch + ".attention.key_length") instanceof Number tkKey ? tkKey.longValue() : mtkLong(tkMetadata, tkArch + ".embedding_length") / tkHeads;
         long tkKvHeads = tkMetadata.get(tkArch + ".attention.head_count_kv") instanceof Number tkKv ? tkKv.longValue() : tkHeads;

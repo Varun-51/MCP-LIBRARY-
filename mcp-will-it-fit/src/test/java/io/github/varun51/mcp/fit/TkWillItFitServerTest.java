@@ -60,7 +60,8 @@ class TkWillItFitServerTest {
         tkRoutes.put("/org/dense/resolve/main/model-00002-of-00002.safetensors", tkShardTwo);
         tkRoutes.put("/org/dense/resolve/main/config.json", mtkConfig(2, 4, 2, 64, 1000));
         tkRoutes.put("/api/models/org/quant/tree/main", mtkListing(Map.of("model.Q4_K_M.gguf", 1_000_000L, "model.Q8_0.gguf", 2_000_000L,
-                "big-F16-00001-of-00002.gguf", 1_500_000L, "big-F16-00002-of-00002.gguf", 1_500_000L, "mmproj-model-f16.gguf", 900_000L)));
+                "big-F16-00001-of-00002.gguf", 1_500_000L, "big-F16-00002-of-00002.gguf", 1_500_000L, "mmproj-model-f16.gguf", 900_000L,
+                "tiny-Q2_K-00002-of-00002.gguf", 10L)));
         tkRoutes.put("/org/quant/resolve/main/model.Q4_K_M.gguf", mtkGguf());
         tkRoutes.put("/api/models/org/redirected/tree/main", tkRoutes.get("/api/models/org/dense/tree/main"));
         tkRoutes.put("/org/redirected/resolve/main/model-00001-of-00002.safetensors", tkShardOne);
@@ -107,8 +108,8 @@ class TkWillItFitServerTest {
     void mtkRanksGgufQuantizationsUsingGgufMetadataWhenConfigIsMissing() {
         Map<String, Object> tkResult = mtkOk(mtkTools(Optional.empty()), Map.of("model", "org/quant", "vram_gb", 0.0025, "context_length", 1000, "overhead_gb", 0.0));
         List<Map<String, Object>> tkVariants = (List<Map<String, Object>>) tkResult.get("variants");
-        assertEquals(List.of("F16", "Q8_0", "Q4_K_M"), tkVariants.stream().map(tkRow -> tkRow.get("variant")).toList());
-        assertEquals(List.of(false, true, true), tkVariants.stream().map(tkRow -> tkRow.get("fits")).toList());
+        assertEquals(List.of("F16", "Q8_0", "Q4_K_M", "Q2_K"), tkVariants.stream().map(tkRow -> tkRow.get("variant")).toList());
+        assertEquals(List.of(false, true, true, true), tkVariants.stream().map(tkRow -> tkRow.get("fits")).toList());
         assertEquals("Q8_0", tkResult.get("best_fit"));
         assertEquals("gguf:model.Q4_K_M.gguf", ((Map<String, Object>) tkResult.get("architecture")).get("source"));
     }

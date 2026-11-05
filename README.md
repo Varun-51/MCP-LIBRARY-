@@ -12,7 +12,13 @@ Ask your assistant whether any Hugging Face model fits your GPU. `mcp-will-it-fi
 
 > **You:** Can I run Qwen/Qwen2.5-7B-Instruct on my RTX 4090 at 32k context?
 >
-> **Claude** (via `will_it_fit`): BF16 needs 14.2 GiB of weights + 1.75 GiB of KV cache: fits in 24 GiB, with room for 116k tokens of context.
+> **`will_it_fit`:** Best fit: safetensors BF16 uses 16.94 of 24.0 GiB at 32768 tokens (14.19 GiB weights + 1.75 GiB KV cache + 1 GiB overhead).
+
+> **You:** And the GGUF builds on an 8 GB card at 16k context?
+>
+> **`will_it_fit`:** Best fit: Q6_K uses 7.7 of 8.0 GiB. Q4_K_M fits with up to 49,405 tokens of context; FP16 and Q8_0 do not fit.
+
+These are real outputs from the live Hugging Face Hub. The run streamed only the tensor headers, not gigabytes of weights.
 
 - Exact parameter counts and dtypes from tensor headers, not guesses from the model name
 - GQA-aware KV cache from `config.json`, or from GGUF metadata when there is no config
