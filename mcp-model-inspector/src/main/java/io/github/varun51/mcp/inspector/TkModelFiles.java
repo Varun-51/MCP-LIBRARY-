@@ -25,7 +25,7 @@ public final class TkModelFiles {
     static final long _TKMAX_HEADER_BYTES = 100L * 1024 * 1024;
     static final int _TKMAX_TENSORS = 1_000_000;
     static final int _TKMAX_LISTED_TENSORS = 50;
-    static final Map<String, Integer> _TKSAFETENSORS_BYTES = Map.ofEntries(
+    public static final Map<String, Integer> _TKSAFETENSORS_BYTES = Map.ofEntries(
             Map.entry("F64", 8), Map.entry("F32", 4), Map.entry("F16", 2), Map.entry("BF16", 2), Map.entry("F8_E4M3", 1), Map.entry("F8_E5M2", 1),
             Map.entry("I64", 8), Map.entry("I32", 4), Map.entry("I16", 2), Map.entry("I8", 1), Map.entry("U8", 1), Map.entry("BOOL", 1));
     private static final String[] _TKGGML_TYPES = {"F32", "F16", "Q4_0", "Q4_1", "Q4_2", "Q4_3", "Q5_0", "Q5_1", "Q8_0", "Q8_1", "Q2_K", "Q3_K", "Q4_K",
@@ -35,13 +35,18 @@ public final class TkModelFiles {
     }
 
     public static Map<String, Object> mtkInspect(Path tkFile) throws IOException {
-        try (InputStream tkIn = new BufferedInputStream(Files.newInputStream(tkFile))) {
-            byte[] tkMagic = tkIn.readNBytes(4);
-            if (new String(tkMagic, StandardCharsets.US_ASCII).equals("GGUF")) {
-                return mtkGguf(new DataInputStream(tkIn));
-            }
-            return mtkSafetensors(tkMagic, tkIn, Files.size(tkFile));
+        try (InputStream tkIn = Files.newInputStream(tkFile)) {
+            return mtkInspect(tkIn, Files.size(tkFile));
         }
+    }
+
+    public static Map<String, Object> mtkInspect(InputStream tkSource, long tkFileSize) throws IOException {
+        InputStream tkIn = new BufferedInputStream(tkSource);
+        byte[] tkMagic = tkIn.readNBytes(4);
+        if (new String(tkMagic, StandardCharsets.US_ASCII).equals("GGUF")) {
+            return mtkGguf(new DataInputStream(tkIn));
+        }
+        return mtkSafetensors(tkMagic, tkIn, tkFileSize);
     }
 
     private static Map<String, Object> mtkSafetensors(byte[] tkPrefix, InputStream tkIn, long tkFileSize) throws IOException {
