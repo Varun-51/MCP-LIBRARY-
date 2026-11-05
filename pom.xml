@@ -17,6 +17,8 @@
         <module>mcp-guardrails</module>
         <module>mcp-model-inspector</module>
         <module>mcp-will-it-fit</module>
+        <module>mcp-inference</module>
+        <module>mcp-quantization</module>
     </modules>
 
     <properties>

@@ -47,6 +47,8 @@ These are real outputs from the live Hugging Face Hub. The run streamed only the
 | `mcp-guardrails` | `detect_pii`, `detect_secrets`, `redact`, `check_injection`, `validate_output` | Checksum-verified PII (Luhn, IBAN mod-97), secret detection with masked output, prompt-injection heuristics, JSON Schema validation of model output. |
 | `mcp-model-inspector` | `inspect_model_file`, `estimate_inference_memory`, `estimate_training_memory` | Reads safetensors and GGUF headers without loading weights; KV-cache aware inference sizing and ZeRO-stage training sizing. File access confined to `TK_MODEL_ROOTS`. |
 | `mcp-will-it-fit` | `will_it_fit`, `detect_gpu` | Fits any Hugging Face model to your GPU from remote tensor headers: per-variant weights, KV cache, max context. |
+| `mcp-inference` | `complete`, `list_models` | OpenAI-compatible chat gateway (vLLM, Ollama, llama.cpp, OpenAI) with pre-flight token budget checks, retries and cancellation on timeout. |
+| `mcp-quantization` | `analyze_quantization` | FP16, BF16, FP8 E4M3/E5M2 and INT8 round-trip error analysis with per-tensor or per-block scaling, verified against ml_dtypes. |
 
 Shared infrastructure lives in `mcp-core`.
 
