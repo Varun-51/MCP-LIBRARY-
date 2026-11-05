@@ -14,6 +14,7 @@ Java [Model Context Protocol](https://modelcontextprotocol.io) servers and conne
 | `mcp-eval` | `score`, `pass_at_k`, `bootstrap_ci` | Exact match, SQuAD token F1, ROUGE-L, WER, CER, unbiased pass@k, seeded bootstrap intervals. Verified against SQuAD v2, rouge-score, jiwer and the Codex estimator. |
 | `mcp-vector-search` | `create_collection`, `upsert`, `search`, `delete`, `drop_collection`, `list_collections`, `save_collection`, `load_collection` | Exact top-k over cosine, dot or L2 with metadata filters and JSON snapshots confined to `TK_VECTOR_DIR`. |
 | `mcp-guardrails` | `detect_pii`, `detect_secrets`, `redact`, `check_injection`, `validate_output` | Checksum-verified PII (Luhn, IBAN mod-97), secret detection with masked output, prompt-injection heuristics, JSON Schema validation of model output. |
+| `mcp-model-inspector` | `inspect_model_file`, `estimate_inference_memory`, `estimate_training_memory` | Reads safetensors and GGUF headers without loading weights; KV-cache aware inference sizing and ZeRO-stage training sizing. File access confined to `TK_MODEL_ROOTS`. |
 
 Shared infrastructure lives in `mcp-core`.
 

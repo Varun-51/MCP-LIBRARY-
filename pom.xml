@@ -15,6 +15,7 @@
         <module>mcp-eval</module>
         <module>mcp-vector-search</module>
         <module>mcp-guardrails</module>
+        <module>mcp-model-inspector</module>
     </modules>
 
     <properties>
