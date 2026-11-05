@@ -14,6 +14,7 @@
         <module>mcp-tokenizer</module>
         <module>mcp-eval</module>
         <module>mcp-vector-search</module>
+        <module>mcp-guardrails</module>
     </modules>
 
     <properties>
