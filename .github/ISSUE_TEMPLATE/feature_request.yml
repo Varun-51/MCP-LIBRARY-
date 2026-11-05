@@ -1,0 +1,23 @@
+name: Feature request
+description: Propose a new tool, server or connector
+labels: [enhancement]
+body:
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: The concrete AI/ML workflow this enables.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed tools
+      description: Tool names, arguments and results.
+    validations:
+      required: true
+  - type: textarea
+    id: security
+    attributes:
+      label: Security considerations
+      description: Credentials, file or network access, data exposure.

@@ -1,0 +1,43 @@
+name: Bug report
+description: A server or tool behaves incorrectly
+labels: [bug]
+body:
+  - type: input
+    id: module
+    attributes:
+      label: Module
+      placeholder: mcp-tokenizer
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Tool name, exact arguments and the MCP client used.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: Include the tool result or error text.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Java 21, Linux x86_64

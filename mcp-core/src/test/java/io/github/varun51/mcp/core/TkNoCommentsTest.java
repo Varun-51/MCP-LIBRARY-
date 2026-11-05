@@ -19,7 +19,7 @@ class TkNoCommentsTest {
         try (Stream<Path> tkFiles = Files.walk(tkRoot)) {
             List<String> tkOffenders = tkFiles
                     .filter(tkPath -> !tkPath.toString().contains("/target/") && !tkPath.toString().contains("/.git/"))
-                    .filter(tkPath -> tkPath.toString().endsWith(".java") || tkPath.getFileName().toString().equals("pom.xml"))
+                    .filter(tkPath -> tkPath.toString().matches(".*\\.(java|ya?ml)$") || tkPath.getFileName().toString().equals("pom.xml"))
                     .filter(TkNoCommentsTest::mtkHasComment)
                     .map(tkRoot::relativize)
                     .map(Path::toString)
@@ -40,7 +40,11 @@ class TkNoCommentsTest {
     private static boolean mtkHasComment(Path tkPath) {
         try {
             String tkSource = Files.readString(tkPath);
-            return tkPath.toString().endsWith(".java") ? mtkHasJavaComment(tkSource) : tkSource.contains("<" + "!--");
+            String tkFile = tkPath.toString();
+            if (tkFile.endsWith(".java")) {
+                return mtkHasJavaComment(tkSource);
+            }
+            return tkFile.endsWith(".xml") ? tkSource.contains("<" + "!--") : tkSource.lines().anyMatch(tkLine -> tkLine.strip().startsWith("#"));
         } catch (IOException tkError) {
             throw new IllegalStateException(tkPath.toString(), tkError);
         }
