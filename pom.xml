@@ -12,6 +12,7 @@
     <modules>
         <module>mcp-core</module>
         <module>mcp-tokenizer</module>
+        <module>mcp-eval</module>
     </modules>
 
     <properties>
