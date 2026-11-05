@@ -12,6 +12,7 @@ Java [Model Context Protocol](https://modelcontextprotocol.io) servers and conne
 |---|---|---|
 | `mcp-tokenizer` | `count_tokens`, `encode`, `decode`, `truncate_to_budget` | Byte-level BPE matching tiktoken `cl100k_base` and `o200k_base` exactly. Vocabularies are SHA-256 verified. |
 | `mcp-eval` | `score`, `pass_at_k`, `bootstrap_ci` | Exact match, SQuAD token F1, ROUGE-L, WER, CER, unbiased pass@k, seeded bootstrap intervals. Verified against SQuAD v2, rouge-score, jiwer and the Codex estimator. |
+| `mcp-vector-search` | `create_collection`, `upsert`, `search`, `delete`, `drop_collection`, `list_collections`, `save_collection`, `load_collection` | Exact top-k over cosine, dot or L2 with metadata filters and JSON snapshots confined to `TK_VECTOR_DIR`. |
 
 Shared infrastructure lives in `mcp-core`.
 
